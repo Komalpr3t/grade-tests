@@ -23,20 +23,15 @@ pipeline {
         stage('Run Tests') {
             steps {
 
-                bat '''
+                bat """
                 if not exist "%REPORT_DIR%" mkdir "%REPORT_DIR%"
 
                 docker run --rm ^
                 -v "%WORKSPACE%:/app" ^
                 -v "%REPORT_DIR%:/app/target/surefire-reports" ^
                 -w /app ^
-                ubuntu:22.04 bash -c "
-                apt update &&
-                apt install openjdk-17-jdk -y &&
-                apt install maven -y &&
-                mvn test
-                "
-                '''
+                ubuntu:22.04 bash -c "apt update && apt install openjdk-17-jdk -y && apt install maven -y && mvn test"
+                """
             }
         }
 
